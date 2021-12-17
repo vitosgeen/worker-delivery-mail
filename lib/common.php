@@ -5,7 +5,6 @@ require __DIR__ . '/config.php';
 
 use PHPMailer\PHPMailer;
 use PhpAmqpLib\Connection\AMQPStreamConnection;
-use PhpAmqpLib\Message\AMQPMessage;
 
 $sitePath = __DIR__ . '/';
 
