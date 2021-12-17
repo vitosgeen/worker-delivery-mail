@@ -1,0 +1,45 @@
+name: PHP worker mail
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Cache Composer packages
+      id: composer-cache
+      uses: actions/cache@v2
+      with:
+        php-version: '7.0'
+        path: vendor
+        key: ${{ runner.os }}-php-${{ hashFiles('**/composer.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-php-
+
+    - name: Install dependencies
+      run: composer install --prefer-dist --no-progress
+
+    # Add a test script to composer.json, for instance: "test": "vendor/bin/phpunit"
+    # Docs: https://getcomposer.org/doc/articles/scripts.md
+
+    # - name: Run test suite
+    #   run: composer run-script test
+    
+    # Setup key
+    - run: set -eu
+    - run: mkdir "$HOME/.ssh"
+    - run: echo "${{ secrets.key }}" > "$HOME/.ssh/key"
+    - run: chmod 600 "$HOME/.ssh/key"
+    
+    # Deploy
+    - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . admin@m1.russianbrides.blog/:/home/admin/web/m1.russianbrides.blog/public_html/
