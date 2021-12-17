@@ -1,4 +1,6 @@
 {
+    "name": "vitosgeen/worker-mail",
+    "description": "Work with queue rabbit mq",
     "require": {
         "phpmailer/phpmailer": "^6.5",
         "smarty/smarty": "^4.0",
