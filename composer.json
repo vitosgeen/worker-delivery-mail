@@ -1,6 +1,7 @@
 {
     "name": "vitosgeen/worker-mail",
     "description": "Work with queue rabbit mq",
+    "license": "GPL-2.0-or-later",
     "require": {
         "phpmailer/phpmailer": "^6.5",
         "smarty/smarty": "^4.0",
