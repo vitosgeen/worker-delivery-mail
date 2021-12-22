@@ -45,6 +45,7 @@ class commonActs {
         global $xmailer, $from, $from_name, $sitePath, $mail;
         try {
             $xmailer = substr(strrchr(commonConfig::getenv('USER_FROM'), "@"), 1);
+            $from_name = $xmailer;
             $from = commonConfig::getenv('USER_FROM');
             $mail = new PHPMailer\PHPMailer();
             $mail->CharSet = 'UTF-8';
