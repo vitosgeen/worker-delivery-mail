@@ -99,5 +99,4 @@ class commonActs {
             error_log($th->getMessage() . $th->getTraceAsString());
         }
     }
-
 }

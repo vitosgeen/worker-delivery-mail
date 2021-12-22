@@ -29,19 +29,43 @@ class commonConfig {
 
     static function processArgs($args) {
         if (!empty($args[1])) {
-            self::setenv('QUEUE_HOST', $args[1]);
+            self::setenv('WORKER_NAME', $args[1]);
         }
         if (!empty($args[2])) {
-            self::setenv('QUEUE_PORT', $args[2]);
+            self::setenv('QUEUE_HOST', $args[2]);
         }
         if (!empty($args[3])) {
-            self::setenv('QUEUE_USER', $args[3]);
+            self::setenv('QUEUE_PORT', $args[3]);
         }
         if (!empty($args[4])) {
-            self::setenv('QUEUE_PASS', $args[4]);
+            self::setenv('QUEUE_USER', $args[4]);
         }
         if (!empty($args[5])) {
-            self::setenv('QUEUE_NAME', $args[5]);
+            self::setenv('QUEUE_PASS', $args[5]);
+        }
+        if (!empty($args[6])) {
+            self::setenv('QUEUE_NAME', $args[6]);
         }
     }
+
+    /**
+     * Check started worker.
+     */
+    static function checkStartedWorker($args) {
+        if (empty($args[1])) {
+            die("EMPTY NAME OF WORKER");
+        }
+        if (substr($args[1], 0, 7) != "worker_") {
+            die("NOT VALID NAME OF WORKER. Worker name should be begin 'worker_'");
+        }
+        if (preg_match("/[^a-zA-Z0-9_]/", $args[1])) {
+            die("NOT VALID NAME OF WORKER. Worker name should has only numbers and letters(A-Za-z0-9_)");
+        }
+        exec('ps -eo pid,cmd | grep "cli/worker_receive.php ' . $args[1] . '"', $result);
+        if (count($result) >= 4 || count($result) == 0) {
+          error_log("worker_receive.php {$args[1]} process is not completed");
+          die(count($result) . ' not end process');
+        }
+    }
+
 }
