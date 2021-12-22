@@ -45,6 +45,9 @@ jobs:
 
     #Create .env
     - run: touch .env
+    #Create log dir
+    - run: mkdir "lib/log"
+    - run: chmod 777 "lib/log"
     
     # Deploy
     - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . $HOST1
