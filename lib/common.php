@@ -62,8 +62,6 @@ class commonActs {
             $mail->AddCustomHeader('List-Unsubscribe', '<' . $dataEmail['unsubsribeUrl'] . '>', '<' . $from . '>');
             $msgHtml = $dataEmail['email_body'];
             $mail->msgHTML($msgHtml);
-            var_dump($xmailer, $from, $from_name, $sitePath, $mail);
-            var_dump($dataEmail);
         } catch (\Throwable $th) {
             error_log($th->getMessage());
             return FALSE;
