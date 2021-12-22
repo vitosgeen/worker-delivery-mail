@@ -53,7 +53,9 @@ class commonActs {
             if (!self::validateEmailDataToQueue($dataEmail)) {
                 return FALSE;
             }
-            $mail->XMailer = $xmailer;
+            // $mail->XMailer = $xmailer;
+            var_dump($from, $from_name);
+            return FALSE;
             $mail->setFrom($from, $from_name);
             $mail->addReplyTo($from, $from_name);
             $mail->addAddress($dataEmail['email'], $dataEmail['email_uname']);
