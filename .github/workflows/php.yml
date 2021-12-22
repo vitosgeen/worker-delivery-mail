@@ -42,4 +42,4 @@ jobs:
     - run: chmod 600 "$HOME/.ssh/key"
     
     # Deploy
-    - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . admin@m1.russianbrides.blog/:/home/admin/web/m1.russianbrides.blog/public_html/
+    - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . admin@m1.russianbrides.blog:/home/admin/web/m1.russianbrides.blog/public_html/
