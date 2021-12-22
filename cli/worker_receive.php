@@ -17,7 +17,8 @@ Arg 3. QUEUE_PORT
 Arg 4. QUEUE_USER
 Arg 5. QUEUE_PASS
 Arg 6. QUEUE_NAME
-Arg 7. USER_FROM
+Arg 7. USER_FROM_EMAIL
+Arg 8. USER_FROM_NAME
 ';
 
 commonConfig::checkStartedWorker($argv);
