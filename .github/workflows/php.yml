@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - master
+env:
+  HOST1: ${{ secrets.host1 }}
 
 jobs:
   build:
@@ -45,4 +47,4 @@ jobs:
     - run: touch .env
     
     # Deploy
-    - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . admin@m1.russianbrides.blog:/home/admin/web/m1.russianbrides.blog/public_html/
+    - run: rsync -e "ssh -i $HOME/.ssh/key -o StrictHostKeyChecking=no" --archive --compress --delete . $HOST1
