@@ -43,22 +43,29 @@ class commonActs {
      */
     static function receiveEmailDataFromQueueCallback($msg) {
         global $xmailer, $from, $from_name, $sitePath, $mail;
-        $xmailer = commonConfig::getenv('ADMIN_EMAIL');
-        $mail = new PHPMailer\PHPMailer();
-        $mail->CharSet = 'UTF-8';
-        $dataEmail = unserialize(base64_decode($msg->body));
-        if (!self::validateEmailDataToQueue($dataEmail)) {
+        try {
+            $xmailer = commonConfig::getenv('ADMIN_EMAIL');
+            $mail = new PHPMailer\PHPMailer();
+            $mail->CharSet = 'UTF-8';
+            $dataEmail = unserialize(base64_decode($msg->body));
+            if (!self::validateEmailDataToQueue($dataEmail)) {
+                return FALSE;
+            }
+            $mail->XMailer = $xmailer;
+            $mail->setFrom($from, $from_name);
+            $mail->addReplyTo($from, $from_name);
+            $mail->addAddress($dataEmail['email'], $dataEmail['email_uname']);
+            $mail->Subject = $dataEmail['email_subject'];
+            $mail->DKIM_selector = 'mail';
+            $mail->AddCustomHeader('List-Unsubscribe', '<' . $dataEmail['unsubsribeUrl'] . '>', '<' . $from . '>');
+            $msgHtml = $dataEmail['email_body'];
+            $mail->msgHTML($msgHtml);
+            var_dump($xmailer, $from, $from_name, $sitePath, $mail);
+            var_dump($dataEmail);
+        } catch (\Throwable $th) {
+            error_log($th->getMessage());
             return FALSE;
         }
-        $mail->XMailer = $xmailer;
-        $mail->setFrom($from, $from_name);
-        $mail->addReplyTo($from, $from_name);
-        $mail->addAddress($dataEmail['email'], $dataEmail['email_uname']);
-        $mail->Subject = $dataEmail['email_subject'];
-        $mail->DKIM_selector = 'mail';
-        $mail->AddCustomHeader('List-Unsubscribe', '<' . $dataEmail['unsubsribeUrl'] . '>', '<' . $from . '>');
-        $msgHtml = $dataEmail['email_body'];
-        $mail->msgHTML($msgHtml);
         if (!$mail->send()) {
             commonActs::writesLog("mail_queue_email_send_error.log", $dataEmail['email']);
         }
