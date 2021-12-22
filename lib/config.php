@@ -68,7 +68,7 @@ class commonConfig {
             die("NOT VALID NAME OF WORKER. Worker name should has only numbers and letters(A-Za-z0-9_)");
         }
         exec('ps -eo pid,cmd | grep "cli/worker_receive.php ' . $args[1] . '"', $result);
-        if (count($result) >= 4 || count($result) == 0) {
+        if (count($result) > 4 || count($result) == 0) {
           error_log("worker_receive.php {$args[1]} process is not completed");
           die(count($result) . ' not end process');
         }
