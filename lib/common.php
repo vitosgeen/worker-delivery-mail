@@ -44,7 +44,8 @@ class commonActs {
     static function receiveEmailDataFromQueueCallback($msg) {
         global $xmailer, $from, $from_name, $sitePath, $mail;
         try {
-            $xmailer = commonConfig::getenv('ADMIN_EMAIL');
+            $xmailer = substr(strrchr(commonConfig::getenv('USER_FROM'), "@"), 1);
+            $from = commonConfig::getenv('USER_FROM');
             $mail = new PHPMailer\PHPMailer();
             $mail->CharSet = 'UTF-8';
             $dataEmail = unserialize(base64_decode($msg->body));

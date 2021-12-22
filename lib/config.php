@@ -46,6 +46,9 @@ class commonConfig {
         if (!empty($args[6])) {
             self::setenv('QUEUE_NAME', $args[6]);
         }
+        if (!empty($args[7])) {
+            self::setenv('USER_FROM', $args[7]);
+        }
     }
 
     /**
