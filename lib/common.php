@@ -43,6 +43,8 @@ class commonActs {
      */
     static function receiveEmailDataFromQueueCallback($msg) {
         global $xmailer, $from, $from_name, $sitePath, $mail;
+        $sleep = 60;
+        $dataEmail = [];
         try {
             $xmailer = substr(strrchr(commonConfig::getenv('USER_FROM_EMAIL'), "@"), 1);
             $from_name = commonConfig::getenv('USER_FROM_NAME');
@@ -72,7 +74,10 @@ class commonActs {
         else {
             commonActs::writesLog("mail_queue_email_send.log", $dataEmail['email']);
         }
-        sleep(60);
+        if (!empty($dataEmail['sleep'])) {
+            $sleep = (int) $dataEmail['sleep'];
+        }
+        sleep($sleep);
         return TRUE;
     }
 
