@@ -72,6 +72,7 @@ class commonActs {
         else {
             commonActs::writesLog("mail_queue_email_send.log", $dataEmail['email']);
         }
+        sleep(60);
         return TRUE;
     }
 
