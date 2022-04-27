@@ -43,7 +43,7 @@ class commonActs {
      */
     static function receiveEmailDataFromQueueCallback($msg) {
         global $xmailer, $from, $from_name, $sitePath, $mail;
-        $sleep = 60;
+        $sleep = 1;
         $dataEmail = [];
         try {
             $xmailer = substr(strrchr(commonConfig::getenv('USER_FROM_EMAIL'), "@"), 1);
