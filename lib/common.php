@@ -60,7 +60,7 @@ class commonActs {
             $mail->addReplyTo($from, $from_name);
             $mail->addAddress($dataEmail['email'], $dataEmail['email_uname']);
             $mail->Subject = $dataEmail['email_subject'];
-            $mail->DKIM_selector = 'mail';
+            $mail->DKIM_selector = 'dkim';
             $mail->AddCustomHeader('List-Unsubscribe', '<' . $dataEmail['unsubsribeUrl'] . '>', '<' . $from . '>');
             $msgHtml = $dataEmail['email_body'];
             $mail->msgHTML($msgHtml);
