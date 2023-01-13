@@ -28,7 +28,7 @@ class commonActs {
             };
             $channel->basic_consume($queue_name, '', false, true, false, false, $callback);
             while ($channel->is_open()) {
-                $channel->wait(null, false, 180);
+                $channel->wait(null, false, 50);
             }
             $channel->close();
             $queue_connect->close();
